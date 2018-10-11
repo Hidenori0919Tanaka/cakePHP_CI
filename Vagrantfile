@@ -10,7 +10,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
 
   config.vm.define :develop do |develop|
-    develop.omnibus.chef_version = :latest
+    # develop.omnibus.chef_version = :latest
+    develop.omnibus.chef_version = "11.14.6"
     develop.vm.hostname = "develop"
     develop.vm.box = "opscode-ubuntu-14.04"
     develop.vm.box_url = "http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_ubuntu-14.04_chef-provisionerless.box"
@@ -24,7 +25,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
     develop.vm.provision :chef_solo do |chef|
       chef.log_level = "debug"
-      chef.cookbooks_path = "./cookbooks"
+      # chef.cookbooks_path = "./cookbooks"
+      chef.cookbooks_path = "cookbook"
       chef.json = {
         nginx: {
           docroot: {
@@ -61,7 +63,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
     ci.vm.provision :chef_solo do |chef|
       chef.log_level = "debug"
-      chef.cookbooks_path = "./cookbooks"
+      # chef.cookbooks_path = "./cookbooks"
+      chef.cookbooks_path = "cookbook"
       chef.json = {
         nginx: {
           docroot: {
@@ -97,7 +100,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     
     deploy.vm.provision :chef_solo do |chef|
       chef.log_level = "debug"
-      chef.cookbooks_path = "./cookbooks"
+      # chef.cookbooks_path = "./cookbooks"
+      chef.cookbooks_path = "cookbook"
       chef.json = {
         nginx: {
           docroot: {
