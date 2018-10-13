@@ -7,9 +7,6 @@
 # All rights reserved - Do Not Redistribute
 #
 
-execute "apt-get update" do
-  command "apt-get update"
-end
 
 # 配列で列挙しているパッケージをインストールする
 %w{curl php5 php5-cli php5-fpm php5-mysql php-pear php5-curl php5-xsl php5-mcrypt mysql-server-5.5 nginx git}.each do |p|

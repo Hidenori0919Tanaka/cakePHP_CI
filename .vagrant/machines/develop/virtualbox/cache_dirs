@@ -2,3 +2,4 @@
 /var/chef/cache
 /opt/chef/embedded/lib/ruby/gems/1.9.1/cache
 /var/lib/apt/lists
+/home/vagrant/.composer/cache

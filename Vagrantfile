@@ -23,10 +23,15 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
      :group => "www-data",
      :mount_options => ["dmode=775,fmode=775"]
 
+    config.vm.provision "shell", inline: <<-SHELL
+     echo "Updating package definitions"
+     sudo apt-get update
+   SHELL
+
     develop.vm.provision :chef_solo do |chef|
       chef.log_level = "debug"
       # chef.cookbooks_path = "./cookbooks"
-      chef.cookbooks_path = "cookbook"
+      chef.cookbooks_path = "cookbooks"
       chef.json = {
         nginx: {
           docroot: {
@@ -45,11 +50,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         }
       }
       chef.run_list = %w[
-        recipe[apt]
+        
         recipe[phpenv::default]
-        recipe[phpenv::composer]
-        recipe[phpenv::develop]
-        recipe[capistrano]
+        
       ]
     end
   end
@@ -64,7 +67,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     ci.vm.provision :chef_solo do |chef|
       chef.log_level = "debug"
       # chef.cookbooks_path = "./cookbooks"
-      chef.cookbooks_path = "cookbook"
+      chef.cookbooks_path = "cookbooks"
       chef.json = {
         nginx: {
           docroot: {
@@ -82,11 +85,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       chef.run_list = %w[
         recipe[apt]
         recipe[phpenv::default]
-        recipe[phpenv::composer]
-        recipe[phpenv::develop]
-        recipe[capistrano]
-        recipe[jenkins::default]
-        recipe[jenkins::plugin]
       ]
     end
   end
@@ -101,7 +99,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     deploy.vm.provision :chef_solo do |chef|
       chef.log_level = "debug"
       # chef.cookbooks_path = "./cookbooks"
-      chef.cookbooks_path = "cookbook"
+      chef.cookbooks_path = "cookbooks"
       chef.json = {
         nginx: {
           docroot: {
@@ -117,7 +115,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       chef.run_list = %w[
         recipe[apt]
         recipe[phpenv::default]
-        recipe[phpenv::composer]
       ]
     end
   end
