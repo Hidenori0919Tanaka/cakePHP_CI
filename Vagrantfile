@@ -11,7 +11,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.define :develop do |develop|
     # develop.omnibus.chef_version = :latest
-    develop.omnibus.chef_version = "11.14.6"
+    # develop.omnibus.chef_version = "12.6"
+    develop.omnibus.chef_version = "12.19.36"
     develop.vm.hostname = "develop"
     develop.vm.box = "opscode-ubuntu-14.04"
     develop.vm.box_url = "http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_ubuntu-14.04_chef-provisionerless.box"
@@ -50,15 +51,18 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         }
       }
       chef.run_list = %w[
-        
+        recipe[apt]
         recipe[phpenv::default]
-        
+        recipe[phpenv::composer]
+        recipe[phpenv::develop]
+        recipe[capistrano]
       ]
     end
   end
 
   config.vm.define :ci do |ci|
-    ci.omnibus.chef_version = :latest
+    # ci.omnibus.chef_version = :latest
+    ci.omnibus.chef_version = "12.19.36"
     ci.vm.hostname = "ci"
     ci.vm.box = "opscode-ubuntu-14.04"
     ci.vm.box_url = "http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_ubuntu-14.04_chef-provisionerless.box"
@@ -85,12 +89,17 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       chef.run_list = %w[
         recipe[apt]
         recipe[phpenv::default]
+        recipe[phpenv::composer]
+        recipe[phpenv::develop]
+        recipe[jenkins::default]
+        recipe[jenkins::plugin]
       ]
     end
   end
 
   config.vm.define :deploy do |deploy|
-    deploy.omnibus.chef_version = :latest
+    # deploy.omnibus.chef_version = :latest
+    deploy.omnibus.chef_version = "12.19.36"
     deploy.vm.hostname = "deploy"
     deploy.vm.box = "opscode-ubuntu-14.04"
     deploy.vm.box_url = "http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_ubuntu-14.04_chef-provisionerless.box"
@@ -115,6 +124,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       chef.run_list = %w[
         recipe[apt]
         recipe[phpenv::default]
+        recipe[phpenv::composer]
       ]
     end
   end

@@ -1,8 +1,17 @@
 DEPENDENCIES
   apt (~> 7.1.1)
+  capistrano
+    path: site-cookbooks/capistrano
+  hostsfile
+  jenkins
+    path: site-cookbooks/jenkins
   phpenv
     path: site-cookbooks/phpenv
 
 GRAPH
   apt (7.1.1)
+  capistrano (0.1.0)
+  hostsfile (3.0.1)
+  jenkins (0.1.0)
   phpenv (0.1.0)
+    hostsfile (>= 0.0.0)
